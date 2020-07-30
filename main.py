@@ -6,12 +6,16 @@ import scipy as sp
 import matplotlib.pyplot as plt
 import time
 
+# salva as imagens das matrizes
+
 
 def save_image(matrix, filename, flag, state):
     plt.spy(matrix)
     plt.savefig("./images/" + flag + "/" +
                 filename + "_" + state + ".png")
     plt.cla()
+
+# escreve os tempos de processamento de cada matriz em um arquivo
 
 
 def write_file(path, array):
@@ -22,6 +26,8 @@ def write_file(path, array):
         myfile.write('\n')
 
     myfile.close()
+
+# função que realiza a redução da largura de banda da matriz
 
 
 def reduce_bandwidth(path, file, flag):
@@ -62,23 +68,27 @@ def reduce_bandwidth(path, file, flag):
     return {file: end_time - init_time}
 
 
-simetric_files = ['1138_bus', 'ash85', 'G21',
-                  'G45', 'G59', 'GD06_theory']
+def main():
+    simetric_files = ['1138_bus', 'ash85', 'G21',
+                      'G45', 'G59', 'GD06_theory']
 
-assimetric_files = ['GD95_a', 'gre_1107',
-                    'gre_115', 'gre_185', 'CSphd', 'cage8']
+    assimetric_files = ['GD95_a', 'gre_1107',
+                        'gre_115', 'gre_185', 'CSphd', 'cage8']
 
-simetric_time_results = []
-assimetric_time_results = []
+    simetric_time_results = []
+    assimetric_time_results = []
 
-for file in simetric_files:
-    simetric_time_results.append(reduce_bandwidth(
-        './inputs/simetric/', file, "simetric"))
+    for file in simetric_files:
+        simetric_time_results.append(reduce_bandwidth(
+            './inputs/simetric/', file, "simetric"))
 
-for file in assimetric_files:
-    assimetric_time_results.append(reduce_bandwidth(
-        './inputs/assimetric/', file, "assimetric"))
+    for file in assimetric_files:
+        assimetric_time_results.append(reduce_bandwidth(
+            './inputs/assimetric/', file, "assimetric"))
+
+    write_file("./output/simetric.txt", simetric_time_results)
+    write_file("./output/assimetric.txt", assimetric_time_results)
 
 
-write_file("./output/simetric.txt", simetric_time_results)
-write_file("./output/assimetric.txt", assimetric_time_results)
+if __name__ == "__main__":
+    main()
