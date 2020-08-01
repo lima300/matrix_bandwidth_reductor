@@ -6,6 +6,21 @@ import scipy as sp
 import matplotlib.pyplot as plt
 import time
 
+# calcula a largura de banda da matriz
+
+
+def calculate_bandwidth(matrix):
+    length = matrix.shape[0]
+    array = []
+
+    for i in range(length):
+        row = matrix.getrow(i)
+        if row.nonzero():
+            minim = (i - min(row.nonzero()[1]))
+            array.append(minim)
+
+    return(max(array))
+
 # salva as imagens das matrizes
 
 
@@ -65,7 +80,7 @@ def reduce_bandwidth(path, file, flag):
 
     save_image(solution, file.split(".")[0], flag, "reduzido")
 
-    return {file: end_time - init_time}
+    return {file: (end_time - init_time, calculate_bandwidth(matrix), calculate_bandwidth(solution))}
 
 
 def main():
