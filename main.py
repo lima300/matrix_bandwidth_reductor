@@ -1,3 +1,6 @@
+# Código produzido para a entrega do relatório 4 da disciplina GCC-254 Complexidade e Projeto de algoritmos
+# Autores: Fábio Júnio Rolin de Oliveira, Kaio Vinícius de Morais Silva e Otávio de Lima Soares
+
 from scipy.io import mmread
 import networkx as nx
 from networkx.utils import reverse_cuthill_mckee_ordering
@@ -42,6 +45,13 @@ def write_file(path, array):
 
     myfile.close()
 
+# checa se a matriz é simetrica
+
+
+def check_simmetric(M):
+    a = M.transpose()
+    return True if (np.allclose(M.A, a.A)) else False
+
 # função que realiza a redução da largura de banda da matriz
 
 
@@ -51,13 +61,6 @@ def reduce_bandwidth(path, file, flag):
 
     init_time = time.time()
     matrix = mmread(path + file_name)
-
-    def check_simmetric(M):
-        a = M.transpose()
-        if (np.allclose(M.A, a.A)):
-            return True
-        else:
-            return False
 
     save_image(matrix, file.split(".")[0], flag, "inicial")
 
